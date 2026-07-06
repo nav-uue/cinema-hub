@@ -1,5 +1,7 @@
 # 🎬 "File Explorer" Style Movie Library on Flask
 
+![Project Preview](./images/CinemaHUB.png)
+
 A lightweight Python (Flask) web application that scans a designated folder on your computer and displays video content using a **Windows File Explorer** interface style (specifically matching the "Large Icons" view).
 
 ## ✨ Features
