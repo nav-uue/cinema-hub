@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinema HUB</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <div class="explorer-container">
+        <!-- Navigation bar -->
+        <div class="address-bar">
+            <div class="nav-buttons">
+                <button class="nav-btn" id="backBtn" disabled>↑ Back</button>
+            </div>
+            <div class="path-display" id="pathDisplay">Root directory</div>
+        </div>
+
+        <!-- Folder and movie cards grid -->
+        <div class="files-grid" id="filesGrid"></div>
+    </div>
+
+    <!-- Video Player -->
+    <div class="video-modal" id="videoModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeBtn">&times;</span>
+            <video id="modalVideo" controls autoplay></video>
+            <div class="video-title" id="modalVideoTitle"></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>
