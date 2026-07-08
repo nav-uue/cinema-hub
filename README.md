@@ -1,12 +1,11 @@
-# 🎬 "File Explorer" Style Movie Library on Flask
+# 🎬 Simple Home Media Server in Flask
 
 ![Project Preview](./images/CinemaHUB.png)
 
-A lightweight Python (Flask) web application that scans a designated folder on your computer and displays video content using a **Windows File Explorer** interface style (specifically matching the "Large Icons" view).
+A lightweight Python (Flask) web application that scans a designated folder on your computer and displays video content using a **Windows File Explorer** interface style.
 
 ## ✨ Features
-* 📂 **Folder Navigation:** Seamlessly browse inside folders (TV shows/seasons) and navigate back using the "Up" button.
-* 💻 **Simple design:** The interface completely mirrors the look and feel of the original Windows Explorer, including single-click item selection.
+* 💻 **User-Friendly Design** The application offers a simple and clear interface, making it easy to navigate through folders and play the video files you want to watch.
 * 🎥 **Built-in Video Player:** Play video files (MP4, MKV, AVI, MOV, etc.) directly in a modern modal window on double-click without reloading the page.
 * 🚀 **Clean Codebase:** Built using only Flask, Vanilla CSS, and native JavaScript — zero external CSS or JS libraries required.
 
