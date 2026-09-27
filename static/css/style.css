@@ -140,7 +140,7 @@ body {
     line-height: 1.3;
 }
 
-/* Player */
+/* -- PLAYER --- */
 .video-modal {
     display: none;
     position: fixed;
@@ -155,10 +155,90 @@ body {
     width: 85%; max-width: 900px;
     border-radius: 6px; overflow: hidden;
 }
+
+/* New container for title positioning */
+.video-wrapper {
+    position: relative;
+    width: 100%;
+}
+
 #modalVideo { width: 100%; display: block; max-height: 80vh; }
-.video-title { color: #ffffff; padding: 12px; background: #1a1a1a; font-size: 14px; }
+
+/* Video title overlay at the top */
+.video-title {
+    position: absolute;
+    top: 0; left: 0; width: 100%;
+    color: #ffffff;
+    padding: 20px 60px 20px 20px;
+    background: linear-gradient(rgba(0,0,0,0.8), transparent);
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    z-index: 2147483647 !important; /* Maximum for normal mode */
+}
+
+/* Class to hide the title with controls */
+.video-wrapper.hide-ui .video-title {
+    opacity: 0;
+    transform: translateY(-10px); /* Move up animation */
+}
+
+/* Close button */
 .close-btn {
-    position: absolute; top: 10px; right: 15px;
-    color: #ffffff; font-size: 32px; font-weight: bold;
-    cursor: pointer; z-index: 1010;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #ffffff;
+    font-size: 32px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1010; /* Above the video title */
+}
+
+/* Navigation buttons container */
+.video-nav-overlay {
+    position: absolute;
+    top: 50%; left: 0; width: 100%;
+    transform: translateY(-50%);
+    display: flex; justify-content: space-between;
+    padding: 0 20px; box-sizing: border-box;
+    pointer-events: none;
+    z-index: 2147483647 !important;
+}
+
+/* Buttons */
+.nav-video-btn {
+    pointer-events: auto; /* Возвращаем кликабельность кнопкам */
+    background: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 24px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.nav-video-btn:hover:not(:disabled) {
+    background: rgba(0, 0, 0, 0.8);
+    border-color: #ffffff;
+    transform: scale(1.1);
+}
+
+/* Inactive button state */
+.nav-video-btn:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+    transform: scale(1);
+}
+
+/* Hide title and buttons on mouse inactivity */
+.video-wrapper.hide-ui .nav-video-btn {
+    opacity: 0;
+    transform: scale(0.9);
 }

@@ -1,4 +1,7 @@
 let currentPath = "";
+let mouseTimer;
+let currentFolderItems = []; // Храним файлы текущей папки глобально
+let currentVideoIndex = -1;  // Индекс текущего видео в массиве видеофайлов
 
 const grid = document.getElementById('filesGrid');
 const pathDisplay = document.getElementById('pathDisplay');
@@ -7,6 +10,10 @@ const modal = document.getElementById('videoModal');
 const modalVideo = document.getElementById('modalVideo');
 const modalTitle = document.getElementById('modalVideoTitle');
 const closeBtn = document.getElementById('closeBtn');
+
+const videoWrapper = document.getElementById('videoWrapper');
+const prevVideoBtn = document.getElementById('prevVideoBtn');
+const nextVideoBtn = document.getElementById('nextVideoBtn');
 
 // Download files from server
 async function loadFolder(path = "") {
@@ -30,6 +37,7 @@ async function loadFolder(path = "") {
 // Render elements on the page
 function renderItems(items) {
     grid.innerHTML = "";
+    currentFolderItems = items;
 
     if (items.length === 0) {
         grid.innerHTML = '<div style="color:#666; padding:20px;">Folder is empty</div>';
@@ -78,18 +86,93 @@ document.addEventListener('click', () => {
     document.querySelectorAll('.file-item').forEach(i => i.classList.remove('selected'));
 });
 
-// Modal player operations
+/* --- MODAL PLAYER OPERATIONS--- */
+// Hides the player interface (title and navigation buttons)
+function hideTitle() {
+    videoWrapper.classList.add('hide-ui');
+}
+
+// Shows the title and resets the inactivity timer
+function resetTimer() {
+    videoWrapper.classList.remove('hide-ui');
+    clearTimeout(mouseTimer);
+    // Hide the title after 2 seconds of mouse inactivity
+    mouseTimer = setTimeout(hideTitle, 2000);
+}
+
 function openVideo(url, name) {
+    // Filter the array to keep only video files
+    const videoFiles = currentFolderItems.filter(item => item.type === 'video');
+    // Find the index of the selected video by its URL or name
+    currentVideoIndex = videoFiles.findIndex(item => item.url === url);
+
     modalVideo.src = url;
     modalTitle.textContent = name;
     modal.style.display = 'flex';
+
+    updateNavButtons(); // Check navigation button states on open
+    resetTimer();
 }
 
 function closeModal() {
     modal.style.display = 'none';
     modalVideo.pause();
     modalVideo.src = "";
+    modalTitle.textContent = "";
+    currentVideoIndex = -1; // Reset current index on close
+
+    // Clear timer to avoid background execution
+    clearTimeout(mouseTimer);
+    videoWrapper.classList.remove('hide-ui');
 }
+
+// Enables or disables "Next" and "Previous" buttons
+function updateNavButtons() {
+    // Get only video files from the current folder
+    const videoFiles = currentFolderItems.filter(item => item.type === 'video');
+    // Disable "Previous" button if it`s the first video
+    prevVideoBtn.disabled = (currentVideoIndex <= 0);
+    // Disable "Next" button if it`s the last video
+    nextVideoBtn.disabled = (currentVideoIndex >= videoFiles.length - 1 || currentVideoIndex === -1);
+}
+
+// Function to switch between videos
+function changeVideo(direction) {
+    const videoFiles = currentFolderItems.filter(item => item.type === 'video');
+
+    // Calculate the new index
+    const newIndex = currentVideoIndex + direction;
+
+    // Check if the video exists at that index
+    if (newIndex >= 0 && newIndex < videoFiles.length) {
+        currentVideoIndex = newIndex;
+        const nextVideo = videoFiles[currentVideoIndex];
+
+        // Load the new video into the player
+        modalVideo.src = nextVideo.url;
+        modalTitle.textContent = nextVideo.name;
+        modalVideo.play();
+
+        updateNavButtons();
+        resetTimer();
+    }
+}
+
+// Track mouse movement over the player
+videoWrapper.addEventListener('mousemove', resetTimer);
+
+// If paused, show the title and keep it visible
+modalVideo.addEventListener('pause', () => {
+    videoWrapper.classList.remove('hide-ui');
+    clearTimeout(mouseTimer);
+});
+
+// On video play, enable the autohide timer again
+modalVideo.addEventListener('play', resetTimer);
+
+// Add click event listeners to navigation buttons
+prevVideoBtn.addEventListener('click', (e) => { e.stopPropagation(); changeVideo(-1); });
+nextVideoBtn.addEventListener('click', (e) => { e.stopPropagation(); changeVideo(1); });
 
 closeBtn.addEventListener('click', closeModal);
 modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
