@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=84.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cinema-hub"
+version = "1.0.0"
+description = "A lightweight Flask-based home media server that scans local directories and displays your movie and TV show collection in web browser."
+readme = "README.md"
+requires-python = ">=3.12"
+license = {text = "MIT"}
+authors = [
+    {name = "nav-uue"}
+]
+keywords = ["media-server", "flask", "tkinter", "video-streaming", "pyinstaller"]
+classifiers = [
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Environment :: X11 Applications :: GTK :: Tkinter",
+]
+
+dependencies = [
+    "Flask>=3.1.3",
+    "Werkzeug>=3.1.8",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pyinstaller>=6.22.3",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/nav-uue/cinema-hub"
+"Bug Tracker" = "https://github.com/nav-uue/cinema-hub/issues"
+
+[tool.pyinstaller]
+main-script = "main.py"
