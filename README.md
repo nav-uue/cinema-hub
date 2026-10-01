@@ -40,7 +40,7 @@ To support seamless deployment as a single executable binary, the path resolutio
 
 A dedicated automation build workspace is located inside the `build/` directory. The provided script executes a rigorous **Clean Build** pipeline: it spins up an isolated temporary directory, clones a fresh copy of the code directly from the repository, builds a pristine Python virtual environment (`venv`), upgrades tools, installs pinned requirements, runs PyInstaller with proper Linux path mappings, exports the final binary, and entirely wipes the temporary cache files from your operating system.
 
-1. Open your terminal and navigate to the project root directory.
+1. Open your terminal and run the following command to download the automated Linux build script directly from the repository:
    ```bash
    curl -O https://raw.githubusercontent.com/nav-uue/cinema-hub/refs/heads/main/build/build_linux.sh
    ```
