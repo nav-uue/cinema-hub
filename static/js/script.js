@@ -1,7 +1,7 @@
 let currentPath = "";
 let mouseTimer;
-let currentFolderItems = []; // Храним файлы текущей папки глобально
-let currentVideoIndex = -1;  // Индекс текущего видео в массиве видеофайлов
+let currentFolderItems = []; // Globally store items of the current folder
+let currentVideoIndex = -1;  // Track current video position within the playlist array
 
 const grid = document.getElementById('filesGrid');
 const pathDisplay = document.getElementById('pathDisplay');
